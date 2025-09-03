@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VB Printing Sales Record</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#007bff">
+    <meta name="description" content="Track your printing and copying sales with ease. Professional sales management for your printing business.">
+    <meta name="keywords" content="printing, sales, record, tracker, business, VB Printing">
+    <meta name="author" content="VB Printing">
+    
+    <!-- Apple PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="VB Sales">
+    
+    <!-- Microsoft PWA Meta Tags -->
+    <meta name="msapplication-TileColor" content="#007bff">
+    <meta name="msapplication-tap-highlight" content="no">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzAwN2JmZiIvPgo8c3ZnIHg9IjgiIHk9IjgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CjxwYXRoIGQ9Ik00IDdoMTZsLTEgMTBINWwtMS0xMFoiLz4KPHA+YXRoIGQ9Ik0xIDFoNGw2IDE0SDE0bC02LTE0WiIvPgo8Y2lyY2xlIGN4PSI5IiBjeT0iMjAiIHI9IjEiLz4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIvPgo8L3N2Zz4KPC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iNDAiIGZpbGw9IiMwMDdiZmYiLz4KPHN2ZyB4PSI0NSIgeT0iNDUiIHdpZHRoPSI5MCIgaGVpZ2h0PSI5MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CjxwYXRoIGQ9Ik00IDdoMTZsLTEgMTBINWwtMS0xMFoiLz4KPHA+YXRoIGQ9Ik0xIDFoNGw2IDE0SDE0bC02LTE0WiIvPgo8Y2lyY2xlIGN4PSI5IiBjeT0iMjAiIHI9IjEiLz4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIvPgo8L3N2Zz4KPC9zdmc+">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>VB Printing Sales Record</h1>
+            <p>Track your printing and copying sales</p>
+        </div>
+
+        <!-- Add Sale Form -->
+        <div class="card form-card">
+            <div class="card-header">
+                <h2>📦 Add New Sale</h2>
+            </div>
+            <div class="card-content">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="product">Product</label>
+                        <select id="product" class="select-input">
+                            <option value="">Select a product</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" min="1" value="1" placeholder="Enter quantity" class="number-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Total</label>
+                        <div class="total-display" id="totalDisplay">GH₵0.00</div>
+                    </div>
+                </div>
+                
+                <button id="addSaleBtn" class="btn btn-primary" disabled>Add Sale</button>
+            </div>
+        </div>
+
+        <!-- Sales Summary -->
+        <div class="summary-grid">
+            <div class="card summary-card">
+                <div class="summary-content">
+                    <div class="summary-info">
+                        <p class="summary-label">Total Sales</p>
+                        <p class="summary-value" id="totalSales">0</p>
+                        <p class="summary-subtitle">items sold</p>
+                    </div>
+                    <div class="summary-icon">🛒</div>
+                </div>
+            </div>
+            
+            <div class="card summary-card">
+                <div class="summary-content">
+                    <div class="summary-info">
+                        <p class="summary-label">Total Revenue</p>
+                        <p class="summary-value" id="totalRevenue">GH₵0.00</p>
+                        <p class="summary-subtitle">total earnings</p>
+                    </div>
+                    <div class="summary-icon">💰</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Button -->
+        <div class="export-container" id="exportContainer" style="display: none;">
+            <button id="exportBtn" class="btn btn-outline">
+                📥 Export to PDF
+            </button>
+        </div>
+
+        <!-- Sales Table -->
+        <div class="card table-card">
+            <div class="card-header">
+                <h2>Sales History</h2>
+            </div>
+            <div class="card-content">
+                <div id="salesContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete Sale</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this sale? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelDelete" class="btn btn-outline">Cancel</button>
+                <button id="confirmDelete" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA Install Banner -->
+    <div id="installBanner" class="install-banner" style="display: none;">
+        <div class="install-banner-content">
+            <div class="install-banner-text">
+                <h3>📱 Install VB Sales App</h3>
+                <p>Add to your home screen for quick access</p>
+            </div>
+            <div class="install-banner-actions">
+                <button id="installBtn" class="btn btn-primary btn-small">Install</button>
+                <button id="dismissBtn" class="btn btn-outline btn-small">Later</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Network Status -->
+    <div id="networkStatus" class="network-status" style="display: none;">
+        <span id="networkStatusText">You're offline. Changes will sync when back online.</span>
+    </div>
+
+    <script>
+        // PWA Installation and Service Worker functionality
+        let deferredPrompt;
+        let isInstalled = false;
+
+        // Check if app is already installed
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+            isInstalled = true;
+        }
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js');
+                    console.log('PWA: Service Worker registered successfully:', registration);
+                    
+                    // Handle service worker updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New content is available, prompt user to refresh
+                                showUpdateBanner();
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.error('PWA: Service Worker registration failed:', error);
+                }
+            });
+        }
+
+        // PWA Install Banner
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('PWA: beforeinstallprompt event fired');
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install banner if not already installed
+            if (!isInstalled) {
+                showInstallBanner();
+            }
+        });
+
+        // Handle app installation
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA: App was installed');
+            isInstalled = true;
+            hideInstallBanner();
+            showToast('App installed successfully! 🎉', 'success');
+        });
+
+        function showInstallBanner() {
+            const banner = document.getElementById('installBanner');
+            banner.style.display = 'block';
+            banner.style.animation = 'slideInUp 0.3s ease-out';
+        }
+
+        function hideInstallBanner() {
+            const banner = document.getElementById('installBanner');
+            banner.style.animation = 'slideInUp 0.3s ease-out reverse';
+            setTimeout(() => {
+                banner.style.display = 'none';
+            }, 300);
+        }
+
+        // Install button click handler
+        document.addEventListener('DOMContentLoaded', () => {
+            const installBtn = document.getElementById('installBtn');
+            const dismissBtn = document.getElementById('dismissBtn');
+
+            installBtn?.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`PWA: User response to install prompt: ${outcome}`);
+                    deferredPrompt = null;
+                    hideInstallBanner();
+                }
+            });
+
+            dismissBtn?.addEventListener('click', () => {
+                hideInstallBanner();
+                // Remember user dismissed (optional: set localStorage flag)
+                localStorage.setItem('pwa_install_dismissed', Date.now().toString());
+            });
+
+            // Check if user previously dismissed and don't show for 24 hours
+            const dismissedTime = localStorage.getItem('pwa_install_dismissed');
+            if (dismissedTime && (Date.now() - parseInt(dismissedTime)) < 24 * 60 * 60 * 1000) {
+                // Don't show install banner for 24 hours after dismissal
+                return;
+            }
+        });
+
+        // Network Status Monitoring
+        function updateNetworkStatus() {
+            const status = document.getElementById('networkStatus');
+            const statusText = document.getElementById('networkStatusText');
+            
+            if (navigator.onLine) {
+                status.style.display = 'none';
+            } else {
+                statusText.textContent = 'You\'re offline. Changes will sync when back online.';
+                status.style.display = 'block';
+                status.className = 'network-status offline';
+            }
+        }
+
+        window.addEventListener('online', () => {
+            updateNetworkStatus();
+            showToast('Back online! 🌐', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            updateNetworkStatus();
+            showToast('You\'re now offline 📵', 'info');
+        });
+
+        // Initialize network status
+        document.addEventListener('DOMContentLoaded', updateNetworkStatus);
+
+        // Handle URL shortcuts from manifest
+        const urlParams = new URLSearchParams(window.location.search);
+        const action = urlParams.get('action');
+
+        if (action === 'add') {
+            // Focus on product select for quick add
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    const productSelect = document.getElementById('product');
+                    if (productSelect) {
+                        productSelect.focus();
+                        productSelect.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 500);
+            });
+        } else if (action === 'export') {
+            // Auto-trigger export if there are sales
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    if (sales.length > 0) {
+                        exportToPDF();
+                    } else {
+                        showToast('No sales to export yet', 'info');
+                    }
+                }, 1000);
+            });
+        }
+
+        function showUpdateBanner() {
+            const updateBanner = document.createElement('div');
+            updateBanner.className = 'update-banner';
+            updateBanner.innerHTML = `
+                <div class="update-banner-content">
+                    <div class="update-banner-text">
+                        <h3>🔄 Update Available</h3>
+                        <p>A new version is ready to install</p>
+                    </div>
+                    <div class="update-banner-actions">
+                        <button id="updateBtn" class="btn btn-primary btn-small">Update Now</button>
+                        <button id="updateDismissBtn" class="btn btn-outline btn-small">Later</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(updateBanner);
+            
+            document.getElementById('updateBtn').addEventListener('click', () => {
+                window.location.reload();
+            });
+            
+            document.getElementById('updateDismissBtn').addEventListener('click', () => {
+                document.body.removeChild(updateBanner);
+            });
+        }
+
+        // Product data
+        const PRODUCTS = [
+            { id: "photocopy_bw", name: "Photocopy (B/W)", unitPrice: 1.00 },
+            { id: "photocopy_color", name: "Photocopy (Color)", unitPrice: 1.50 },
+            { id: "printing_bw", name: "Printing (B/W)", unitPrice: 1.50 },
+            { id: "printing_color", name: "Printing (Color)", unitPrice: 2.00 },
+            { id: "lamination_a4", name: "Lamination A4", unitPrice: 5.00 },
+            { id: "lamination_a3", name: "Lamination A3", unitPrice: 10.00 },
+            { id: "art_paper_bw", name: "Art Paper (B/W)", unitPrice: 2.00 },
+            { id: "art_paper_color", name: "Art Paper (Color)", unitPrice: 2.50 },
+            { id: "dtf_a3", name: "DTF (A3)", unitPrice: 11.00 },
+            { id: "dtf_a4", name: "DTF (A4)", unitPrice: 5.50 }
+        ];
+
+        const STORAGE_KEY = "vb_printing_sales";
+
+        // Global variables
+        let sales = [];
+        let deleteItemId = null;
+
+        // DOM elements
+        const productSelect = document.getElementById('product');
+        const quantityInput = document.getElementById('quantity');
+        const totalDisplay = document.getElementById('totalDisplay');
+        const addSaleBtn = document.getElementById('addSaleBtn');
+        const totalSalesElement = document.getElementById('totalSales');
+        const totalRevenueElement = document.getElementById('totalRevenue');
+        const exportContainer = document.getElementById('exportContainer');
+        const exportBtn = document.getElementById('exportBtn');
+        const salesContent = document.getElementById('salesContent');
+        const deleteModal = document.getElementById('deleteModal');
+        const cancelDeleteBtn = document.getElementById('cancelDelete');
+        const confirmDeleteBtn = document.getElementById('confirmDelete');
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            populateProductDropdown();
+            loadSalesFromStorage();
+            setupEventListeners();
+            updateTotal();
+            renderSales();
+            updateSummary();
+        }
+
+        function populateProductDropdown() {
+            productSelect.innerHTML = '<option value="">Select a product</option>';
+            
+            PRODUCTS.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = `${product.name} - GH₵${product.unitPrice.toFixed(2)}`;
+                productSelect.appendChild(option);
+            });
+        }
+
+        function setupEventListeners() {
+            productSelect.addEventListener('change', updateTotal);
+            quantityInput.addEventListener('input', updateTotal);
+            addSaleBtn.addEventListener('click', addSale);
+            exportBtn.addEventListener('click', exportToPDF);
+            cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+            confirmDeleteBtn.addEventListener('click', deleteSale);
+            
+            // Close modal when clicking outside
+            deleteModal.addEventListener('click', function(e) {
+                if (e.target === deleteModal) {
+                    closeDeleteModal();
+                }
+            });
+            
+            // Handle Enter key in quantity input
+            quantityInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !addSaleBtn.disabled) {
+                    addSale();
+                }
+            });
+        }
+
+        function updateTotal() {
+            const selectedProduct = PRODUCTS.find(p => p.id === productSelect.value);
+            const quantity = parseInt(quantityInput.value) || 0;
+            
+            if (selectedProduct && quantity > 0) {
+                const total = selectedProduct.unitPrice * quantity;
+                totalDisplay.textContent = `GH₵${total.toFixed(2)}`;
+                addSaleBtn.disabled = false;
+            } else {
+                totalDisplay.textContent = 'GH₵0.00';
+                addSaleBtn.disabled = true;
+            }
+        }
+
+        function addSale() {
+            const selectedProduct = PRODUCTS.find(p => p.id === productSelect.value);
+            const quantity = parseInt(quantityInput.value) || 0;
+            
+            if (!selectedProduct || quantity <= 0) return;
+            
+            const sale = {
+                id: Date.now().toString(),
+                product: { ...selectedProduct },
+                quantity: quantity,
+                total: selectedProduct.unitPrice * quantity,
+                date: new Date().toLocaleString()
+            };
+            
+            sales.unshift(sale);
+            saveSalesToStorage();
+            renderSales();
+            updateSummary();
+            
+            // Reset form
+            productSelect.value = '';
+            quantityInput.value = '1';
+            updateTotal();
+            
+            // Show success animation
+            addSaleBtn.textContent = '✓ Added!';
+            addSaleBtn.style.backgroundColor = '#28a745';
+            setTimeout(() => {
+                addSaleBtn.textContent = 'Add Sale';
+                addSaleBtn.style.backgroundColor = '#007bff';
+            }, 1000);
+        }
+
+        function renderSales() {
+            if (sales.length === 0) {
+                showEmptyState();
+                exportContainer.style.display = 'none';
+                return;
+            }
+            
+            exportContainer.style.display = 'flex';
+            
+            // Desktop table
+            const desktopTable = createDesktopTable();
+            
+            // Mobile cards
+            const mobileCards = createMobileCards();
+            
+            salesContent.innerHTML = `
+                <div class="table-container">
+                    ${desktopTable}
+                </div>
+                <div class="mobile-cards">
+                    ${mobileCards}
+                </div>
+            `;
+            
+            // Add event listeners for delete buttons
+            setupDeleteButtons();
+        }
+
+        function createDesktopTable() {
+            let tableHTML = `
+                <table class="sales-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            sales.forEach((sale, index) => {
+                tableHTML += `
+                    <tr style="animation-delay: ${index * 100}ms">
+                        <td>${sale.product.name}</td>
+                        <td>${sale.quantity}</td>
+                        <td>GH₵${sale.product.unitPrice.toFixed(2)}</td>
+                        <td><strong>GH₵${sale.total.toFixed(2)}</strong></td>
+                        <td class="date-cell">${sale.date}</td>
+                        <td>
+                            <button class="btn btn-danger btn-small delete-btn" data-id="${sale.id}">
+                                🗑️
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            return tableHTML;
+        }
+
+        function createMobileCards() {
+            let cardsHTML = '';
+            
+            sales.forEach((sale, index) => {
+                cardsHTML += `
+                    <div class="mobile-card" style="animation-delay: ${index * 100}ms">
+                        <div class="mobile-card-header">
+                            <h3 class="mobile-card-title">${sale.product.name}</h3>
+                            <button class="btn btn-danger btn-small delete-btn" data-id="${sale.id}">
+                                🗑️
+                            </button>
+                        </div>
+                        <div class="mobile-card-details">
+                            <div class="mobile-card-row">
+                                <span class="label">Quantity:</span>
+                                <span class="value">${sale.quantity}</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="label">Unit Price:</span>
+                                <span class="value">GH₵${sale.product.unitPrice.toFixed(2)}</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="label">Total:</span>
+                                <span class="value total">GH₵${sale.total.toFixed(2)}</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="label">Date:</span>
+                                <span class="value">${sale.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            return cardsHTML;
+        }
+
+        function setupDeleteButtons() {
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    deleteItemId = this.getAttribute('data-id');
+                    showDeleteModal();
+                });
+            });
+        }
+
+        function showEmptyState() {
+            salesContent.innerHTML = `
+                <div class="empty-state">
+                    <div class="icon">📦</div>
+                    <h3>No sales recorded yet</h3>
+                    <p>Add your first sale using the form above</p>
+                </div>
+            `;
+        }
+
+        function updateSummary() {
+            const totalItems = sales.reduce((sum, sale) => sum + sale.quantity, 0);
+            const totalRevenue = sales.reduce((sum, sale) => sum + sale.total, 0);
+            
+            totalSalesElement.textContent = totalItems;
+            totalRevenueElement.textContent = `GH₵${totalRevenue.toFixed(2)}`;
+            
+            // Add animation to numbers
+            animateNumber(totalSalesElement, totalItems);
+            animateValue(totalRevenueElement, totalRevenue, 'GH₵');
+        }
+
+        function animateNumber(element, finalValue) {
+            element.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function animateValue(element, finalValue, prefix = '') {
+            element.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function showDeleteModal() {
+            deleteModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            deleteModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            deleteItemId = null;
+        }
+
+        function deleteSale() {
+            if (deleteItemId) {
+                sales = sales.filter(sale => sale.id !== deleteItemId);
+                saveSalesToStorage();
+                renderSales();
+                updateSummary();
+                closeDeleteModal();
+                
+                // Show success message
+                showToast('Sale deleted successfully', 'success');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideInLeft 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 2000);
+        }
+
+        function exportToPDF() {
+            if (sales.length === 0) return;
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add title
+            doc.setFontSize(20);
+            doc.text('VB Printing Sales Record', 20, 20);
+            
+            // Add date
+            doc.setFontSize(12);
+            doc.text(`Generated: ${new Date().toLocaleString()}`, 20, 30);
+            
+            // Add summary
+            const totalItems = sales.reduce((sum, sale) => sum + sale.quantity, 0);
+            const totalRevenue = sales.reduce((sum, sale) => sum + sale.total, 0);
+            
+            doc.text(`Total Items Sold: ${totalItems}`, 20, 40);
+            doc.text(`Total Revenue: GH₵${totalRevenue.toFixed(2)}`, 20, 50);
+            
+            // Prepare table data
+            const tableData = sales.map(sale => [
+                sale.product.name,
+                sale.quantity.toString(),
+                `GH₵${sale.product.unitPrice.toFixed(2)}`,
+                `GH₵${sale.total.toFixed(2)}`,
+                sale.date
+            ]);
+            
+            // Add table
+            doc.autoTable({
+                head: [['Product', 'Quantity', 'Unit Price', 'Total', 'Date']],
+                body: tableData,
+                startY: 60,
+                styles: {
+                    fontSize: 10,
+                    cellPadding: 3
+                },
+                headStyles: {
+                    fillColor: [0, 123, 255],
+                    textColor: 255
+                },
+                alternateRowStyles: {
+                    fillColor: [245, 245, 245]
+                }
+            });
+            
+            // Save the PDF
+            doc.save('vb-printing-sales-record.pdf');
+            
+            // Show success message
+            showToast('PDF exported successfully!', 'success');
+        }
+
+        function saveSalesToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(sales));
+            } catch (error) {
+                console.error('Error saving to localStorage:', error);
+                showToast('Error saving data', 'error');
+            }
+        }
+
+        function loadSalesFromStorage() {
+            try {
+                const savedSales = localStorage.getItem(STORAGE_KEY);
+                if (savedSales) {
+                    sales = JSON.parse(savedSales);
+                }
+            } catch (error) {
+                console.error('Error loading from localStorage:', error);
+                showToast('Error loading saved data', 'error');
+                sales = [];
+            }
+        }
+
+        // Handle page visibility change to save data
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                saveSalesToStorage();
+            }
+        });
+
+        // Handle browser close/refresh
+        window.addEventListener('beforeunload', function() {
+            saveSalesToStorage();
+        });
+    </script>
+</body>
+</html>
